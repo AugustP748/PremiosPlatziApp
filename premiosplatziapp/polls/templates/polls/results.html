@@ -1,10 +1,15 @@
 
 
-<h1>{{question.questionText}}</h1>
+<h1>{{Question.questionText}}</h1>
     <ul>
-        {% for choice in question.choice_set.all %}
-            <li>{{choice.choiceText}} -- {{choice.votes}} vote{{choice.votes|pluralize}}</li>
-        {% endfor %}
+        {% if Question.choice_set.all %}
+            {% for choice in Question.choice_set.all %}
+                <li>{{choice.choiceText}} -- {{choice.votes}} vote{{choice.votes|pluralize}}</li>
+            {% endfor %}
+        {% else %}
+            <p>This page is empy, maybe something is wrong</p>
+        {% endif %}
+        
     </ul>
     
-<a href="{% url 'polls:detail' question.id %}">¿Te gustar&iacute;a votar de nuevo?</a>
+
