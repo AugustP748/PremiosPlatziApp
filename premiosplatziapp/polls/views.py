@@ -38,7 +38,7 @@ class detailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
-class resultsView(generic.ListView):
+class resultsView(generic.DetailView):
     template_name="polls/results.html"
     model = Question
 

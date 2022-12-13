@@ -1,20 +1,65 @@
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %} <!-- Sirve para seguridad informatica -->
-   <fieldset>
-        <legend><h1>{{question.questionText}}</h1></legend>
-        {% if error_messege %}
-            <p><strong>{{error_messege}}</strong></p>
-        {% endif %}
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
-            <label for="choice{{forloop.counter}}">{{choice.choiceText}}</label>
-        <br>
-        {% endfor %}
+{% load static %}
+<!doctype html>
+<html lang="en">
 
-   </fieldset> 
-   <input type="submit" value="Votar" name="">
+<head>
+  <title>{{question.questionText}}</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</form>
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static './css/detail.css'%}">
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+    <legend><h1>{{question.questionText}}</h1></legend>
+  </header>
+  <main>
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %} <!-- Sirve para seguridad informatica -->
+       <fieldset>
+            
+            {% if error_messege %}
+                <p><strong>{{error_messege}}</strong></p>
+            {% endif %}
+            {% if question.choice_set.all %}
+                {% for choice in question.choice_set.all %}
+                    <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
+                    <label for="choice{{forloop.counter}}">{{choice.choiceText}}</label>
+                <br>
+                {% endfor %}
+            {% else %}
+                <p>Oh, there aren't any choice to select here, maybe later in a new update, see you soon!!!</p>
+            {% endif %}
+            
+    
+       </fieldset> 
+       
+       <input type="submit" value="Votar" name="">
+       <a href= {% url 'polls:index' %}>Volver</a>
+    
+    </form>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
 
 <!-- <h1>{{question.questionText}}</h1>
 
